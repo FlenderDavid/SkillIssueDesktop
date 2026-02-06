@@ -70,7 +70,15 @@ namespace SkillIssue
                     ? doc.RootElement.GetProperty("is_admin").GetInt32()
                     : int.Parse(doc.RootElement.GetProperty("is_admin").GetString());
 
-                if (isAdmin == 1) MessageBox.Show("Sikeres login, Admin!");
+                if (isAdmin == 1) {
+                    Dispatcher.Invoke(() =>
+                    {
+                        var dashboard = new Dashboard(_client, _rawCookies);
+                        dashboard.Show();
+                        this.Close();
+                    });
+
+                }
                 else MessageBox.Show("Nem vagy admin.");
             }
             else MessageBox.Show("401 - Belépés megtagadva.");
